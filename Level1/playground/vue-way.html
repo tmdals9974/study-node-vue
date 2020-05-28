@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    
+    <script>
+        var div = document.querySelector('#app');
+        var viewModel = {};
+
+        // 즉시실행함수 https://developer.mozilla.org/ko/docs/Glossary/IIFE
+        (function () {
+            function init() {
+                Object.defineProperty(viewModel, 'str', {
+                    set: function (val) {
+                        render(val);
+                    }
+                });
+            }
+
+            function render(val) {
+                div.innerHTML = val;
+            }
+
+            init();
+        })();
+
+    </script>
+    </body>
+
+</html>

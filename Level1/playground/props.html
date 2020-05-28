@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <app-header v-bind:propsdata="message"></app-header>
+        <app-content v-bind:propsdata="num"></app-content>
+
+        <button onclick="test()"> message, num 변경 </button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var appHeader = {
+            template: '<h1>{{ propsdata }}</h1>',
+            props: ['propsdata']
+        }
+
+        var appContent = {
+            template: '<div>{{ propsdata }}</div>',
+            props: ['propsdata']
+        }
+
+        var app = new Vue({
+            el: '#app',
+            components: {
+                'app-header': appHeader,
+                'app-content' : appContent
+            },
+            data: {
+                message: 'hi',
+                num: 10
+            }
+        });
+
+        function test() { 
+            app._data.message += '1';
+            app._data.num++;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <app-header v-on:pass="logText"></app-header>
+        <app-content v-on:add="add" v-bind:num="num"></app-content>
+
+        <!-- 승민 테스트용. 이미 vue el로 생성된 #app 하위에 있기에 new Vue({})로 해선 적용이 안되었다. 
+            하위 컴포넌트 만들었던 것과 동일하게 하니 적용되었다. 
+            but.. 옛날문법이라 함..
+        -->
+        <button id="btn" v-on:click="add" v-on:add="add" v-bind:num="num"> {{ num }} </button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+
+        var btn = {
+            el:'#btn',
+            methods: {
+                add : function() {
+                    this.$emit('add');
+                }
+            },
+            props : ['num']
+        };
+
+        var appHeader = {
+            template: '<button v-on:click="passEvent">click me</button>',
+            methods: {
+                passEvent: function() {
+                    this.$emit('pass');
+                }
+            }
+        };
+
+        var appContent = {
+            template: '<button v-on:click="add"> add {{ num }}</button>',
+            methods: {
+                add: function() {
+                    this.$emit('add');
+                }
+            },
+            props: ['num']
+        };
+
+        var app = new Vue({
+            el: '#app',
+            components: {
+                'app-header': appHeader,
+                'app-content' : appContent
+            },
+            methods: {
+                logText : function() {
+                    console.log('hi');
+                },
+                add : function() {
+                    this.num++;
+                }
+            },
+            data: {
+                num: 10
+            }
+        });
+    </script>
+</body>
+
+</html>
