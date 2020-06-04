@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="display:table">
+        <div id="app" style="display:table-cell; vertical-align: middle;">
+            <div>
+                <button v-on:click="logText">click me</button>
+            </div>
+            <div>
+                <input type="text" v-on:keyup.enter="logText"> <!-- 이벤트 모디파이어.. keyup.enter = 키업 중 엔터 -->
+            </div>
+            <div>
+                <button>add</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            methods: {
+                logText: function () { console.log('clicked'); }
+            },
+        })
+    </script>
+</body>
+
+</html>
