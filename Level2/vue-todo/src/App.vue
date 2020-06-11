@@ -1,0 +1,65 @@
+<template>
+  <div id="app">
+    <TodoHeader/>
+    <TodoInput v-on:addTodoItem="addTodoItem"/>
+    <TodoList v-on:removeItem="removeItem" v-bind:todoItems="todoItems"/>
+    <TodoFooter/>
+  </div>
+</template>
+
+<script>
+import TodoHeader from './components/TodoHeader'
+import TodoInput from './components/TodoInput'
+import TodoList from './components/TodoList'
+import TodoFooter from './components/TodoFooter'
+
+export default {
+  data: function() {
+    return {
+      todoItems: []
+    }
+  },
+  created: function() {
+    if (localStorage.length > 0) {
+      for (var i = 0; i < localStorage.length; i++) {
+        if (localStorage.key(i) !== 'loglevel:webpack-dev-server')
+          this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+      }
+    }
+  },
+  methods: {
+    addTodoItem : function(newTodoItem) {
+      var obj = {completed: false, item: newTodoItem};
+      localStorage.setItem(newTodoItem, JSON.stringify(obj));
+      this.todoItems.push(obj);
+    },
+    removeItem : function(todoItem, index) {
+      localStorage.removeItem(todoItem.item);
+      this.todoItems.splice(index, 1);
+    }
+  },
+  components: {
+    TodoHeader, TodoInput, TodoList, TodoFooter
+  }
+}
+</script>
+
+<style>
+body {
+  text-align-last: center;
+  background-color: #F6F6F6;
+}
+
+input {
+  border-style: groove;
+  width : 200px;
+}
+
+button {
+  border-style: groove;
+}
+
+.shadow {
+  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
+}
+</style>
