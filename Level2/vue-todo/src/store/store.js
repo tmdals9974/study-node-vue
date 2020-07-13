@@ -1,6 +1,21 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+/*
+    store 모듈화 방법
+    
+    import * as getters from 'store/getters.js'    // as = Alias (별칭)
+    import * as mutations from 'store/mutations.js'
+    import * as actions from 'store/actions.js'
+
+    export const stroe = new Vuex.Store({
+        state : {},
+        getters : getters,
+        mutations: mutations,
+        actions : actions
+    })
+*/
+
 Vue.use(Vuex); //전역사용 선언
 
 const storage = {
