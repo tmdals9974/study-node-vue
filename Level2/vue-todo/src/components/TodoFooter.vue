@@ -5,12 +5,14 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
     methods: {
-        removeAllItem : function() {
-            this.$emit('removeAllItem');
-        }
-    },
+        ...mapMutations({
+            removeAllItem : 'removeAllItem'
+        })
+    }
 }
 </script>
 
@@ -26,5 +28,6 @@ export default {
 .clearAllBtn {
     color: #e20303;
     display: block;
+    cursor: pointer;
 }
 </style>

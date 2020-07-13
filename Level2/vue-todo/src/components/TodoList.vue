@@ -1,27 +1,29 @@
 <template>
     <div>
-        <ul>
-            <li v-for="(todoItem, index) in todoItems" v-bind:key="todoItem.item" class="shadow">
-                <i class="checkBtn fas fa-check" v-bind:class="{checkBtnCompleted: todoItem.completed}" v-on:click="completeItem(todoItem, index)"></i>
+        <transition-group name="list" tag="ul">
+            <li v-for="(todoItem, index) in this.todoItems" v-bind:key="todoItem.item" class="shadow">
+                <i class="checkBtn fas fa-check" v-bind:class="{checkBtnCompleted: todoItem.completed}" v-on:click="completeItem({todoItem, index})"></i>
                 <span v-bind:class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span>
-                <span class="removeBtn" v-on:click="removeItem(todoItem, index)"> 
+                <span class="removeBtn" v-on:click="removeItem({todoItem, index})"> 
                     <i class="fas fa-trash-alt"></i>
                 </span>
             </li>
-        </ul>
+        </transition-group>    
     </div>
 </template>
 
 <script scoped>
+import { mapState, mapMutations } from 'vuex'
+
 export default {
-    props: ['todoItems'],    
     methods: {
-        removeItem : function(todoItem, index) {            
-            this.$emit('removeItem', todoItem, index);
-        },
-        completeItem : function(todoItem, index) {
-            this.$emit('completeItem', todoItem, index);
-        }
+        ...mapMutations({
+            removeItem: 'removeItem',
+            completeItem : 'completeItem'
+        })
+    },
+    computed: {
+        ...mapState(['todoItems'])
     }
 }
 </script>
@@ -49,12 +51,14 @@ li {
 }
 .checkBtnCompleted {
     color: #b3adad;
+    cursor: pointer;
 }
 .textCompleted {
     text-decoration: line-through;
     color: #b3adad;
 }
 .removeBtn {
+    cursor: pointer;
     margin-left: auto;
     color: #de4343;
 }
@@ -67,5 +71,4 @@ li {
     opacity: 0;
     transform: translateY(30px);
 }
-
 </style>
